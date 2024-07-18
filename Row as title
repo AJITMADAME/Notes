@@ -1,0 +1,27 @@
+
+import pandas as pd
+
+# Sample data
+data = [
+    ["Table Title"],  # This is the title row
+    ["Header1", "Header2"],
+    [1, 2],
+    [3, 4]
+]
+
+# Convert it to a DataFrame
+df = pd.DataFrame(data)
+
+# Extract the title
+title = df.iloc[0, 0]
+
+# Extract the rest of the data (excluding the title row)
+df = df[1:].reset_index(drop=True)
+
+# Set the new header row
+df.columns = df.iloc[0]
+df = df[1:].reset_index(drop=True)
+
+# Print the title and the DataFrame
+print("Table Title:", title)
+print(df)
