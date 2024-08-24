@@ -1,0 +1,8 @@
+# Sample lists
+list1 = ["apple", "banana", "cherry"]
+list2 = [2, 3, 1]
+
+# Repeat each string in list1 according to the corresponding integer in list2
+result = [s for s, n in zip(list1, list2) for _ in range(n)]
+
+print(result)
