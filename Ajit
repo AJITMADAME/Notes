@@ -1,3 +1,33 @@
+import re
+
+# Sample text to search
+text = "Some text before the date 01-Aug-2024 Value1 Value2 Value3 Value4 Value5 Value6 Some more text."
+
+# Regex pattern
+pattern = r"(\b\d{2}-(?:[A-Za-z]{3})-\d{4}\b|\b\d{2}/\d{2}/\d{4}\b)(.*?)(?:\s+(\S+)){1,5}"
+
+# Find all matches
+matches = re.findall(pattern, text)
+
+# Extract and format the matches
+results = []
+for match in matches:
+    # match[0] is the date, match[1] is everything between the date and the values, and match[2:] are the next 5 values.
+    date = match[0]
+    values = [match[i] for i in range(2, len(match))]
+    results.append((date, values))
+
+# Output results
+for result in results:
+    print(f"Date: {result[0]}, Values: {result[1]}")
+
+
+
+
+
+
+
+
 # Sample lists
 list1 = ["apple", "banana", "cherry"]
 list2 = [2, 3, 1]
@@ -6,3 +36,5 @@ list2 = [2, 3, 1]
 result = [s for s, n in zip(list1, list2) for _ in range(n)]
 
 print(result)
+
+
