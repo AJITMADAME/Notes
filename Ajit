@@ -1,3 +1,22 @@
+import re
+
+# Example list containing a mix of values, including a date in "DD/MM/YYYY" format
+my_list = ["01/10/2024", "Value1", "13/02/2024", "Value2", "Some text", "01/08/2023"]
+
+# Define the regex pattern for matching dates in "DD/MM/YYYY" format
+date_pattern = r"\b\d{2}/\d{2}/\d{4}\b"
+
+# Remove dates from the list using list comprehension and regex
+filtered_list = [item for item in my_list if not re.match(date_pattern, item)]
+
+print(filtered_list)
+
+
+
+
+
+
+
 (\b\d{2}-(?:[A-Za-z]{3})-\d{4}\b|\b\d{2}/\d{2}/\d{4}\b)(?:\s+(\S+)){5}
 
 
