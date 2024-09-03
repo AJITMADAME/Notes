@@ -1,3 +1,15 @@
+
+# Sample list
+my_list = ['Purchase', 'Redemption', 'Transfer', 'Redemption', 'Dividend']
+
+# Remove all occurrences of 'Redemption'
+my_list = [item for item in my_list if item != 'Redemption']
+
+print(my_list)
+
+
+
+
 import re
 
 # Example list containing a mix of values, including a date in "DD/MM/YYYY" format
