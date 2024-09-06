@@ -1,4 +1,21 @@
 
+import re
+
+# Your input string
+text = "This is about SBI Premiers Liquid Fund and SBIMF."
+
+# Regex pattern (case-insensitive due to re.IGNORECASE)
+pattern = r"\b(sbimf|sbi premiers liquid fund|sbi mutual fund)\b"
+
+# Check if the pattern exists in the text (case-insensitive)
+if re.search(pattern, text, re.IGNORECASE):
+    print("Match found!")
+else:
+    print("No match.")
+
+
+
+
 # Sample list
 my_list = ['Purchase', 'Redemption', 'Transfer', 'Redemption', 'Dividend']
 
