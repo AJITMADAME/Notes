@@ -121,6 +121,129 @@ if __name__ == "__main__":
 
 
 
+import os
+import re
+import pandas as pd
+
+# Main directories for storing all files
+base_dir = "data"
+pdf_dir = os.path.join(base_dir, "pdfs")
+excel_dir = os.path.join(base_dir, "excels")
+output_dir = os.path.join(base_dir, "outputs")
+
+# Ensure base directories exist
+os.makedirs(base_dir, exist_ok=True)
+os.makedirs(pdf_dir, exist_ok=True)
+os.makedirs(excel_dir, exist_ok=True)
+os.makedirs(output_dir, exist_ok=True)
+
+# Function to check if the PDF file matches the condition (SBI, Birla, ICICI, etc.)
+def check_file_type(pdf_file_path):
+    with open(pdf_file_path, 'rb') as file:
+        # Replace this with actual PDF text extraction logic
+        pdf_text = extract_text_from_pdf(file)
+        
+        # Define patterns for different categories (SBI, Birla, ICICI)
+        patterns = {
+            'sbi': r"\b(sbimf|sbi premiers liquid fund|sbi mutual fund)\b",
+            'birla': r"\b(birla|birla sun life)\b",
+            'icici': r"\b(icici|icici prudential)\b"
+        }
+        
+        # Check which pattern matches the PDF text
+        for key, pattern in patterns.items():
+            if re.search(pattern, pdf_text, re.IGNORECASE):
+                return key
+    return None
+
+# Function to process PDF and Excel for each type (e.g., SBI, Birla, ICICI)
+def run_main_code(pdf_file, excel_file):
+    # Placeholder main code that returns a DataFrame after processing
+    print(f"Running main code for PDF: {pdf_file} and Excel: {excel_file}")
+    
+    # Create a dummy DataFrame for demonstration
+    data = {
+        'Column1': ['Value1', 'Value2'],
+        'Column2': ['Value3', 'Value4']
+    }
+    df = pd.DataFrame(data)
+    
+    return df
+
+# Main function to process files
+def process_files():
+    # Get all PDF files from the pdf directory
+    pdf_files = [f for f in os.listdir(pdf_dir) if f.endswith('.pdf')]
+    
+    if pdf_files:
+        for pdf_file in pdf_files:
+            pdf_file_path = os.path.join(pdf_dir, pdf_file)
+            
+            # Check the type of file (SBI, Birla, ICICI, etc.)
+            file_type = check_file_type(pdf_file_path)
+            if file_type:
+                print(f"{file_type.upper()} condition met in {pdf_file}")
+                
+                # Create specific directories for the file type (e.g., sbi, birla, icici)
+                specific_pdf_dir = os.path.join(base_dir, file_type, "pdf")
+                specific_excel_dir = os.path.join(base_dir, file_type, "excel")
+                specific_output_dir = os.path.join(base_dir, file_type, "output")
+                
+                # Ensure directories exist
+                os.makedirs(specific_pdf_dir, exist_ok=True)
+                os.makedirs(specific_excel_dir, exist_ok=True)
+                os.makedirs(specific_output_dir, exist_ok=True)
+                
+                # Move the PDF file to the appropriate directory
+                os.rename(pdf_file_path, os.path.join(specific_pdf_dir, pdf_file))
+                
+                # Find a corresponding Excel file (assuming the same naming pattern)
+                excel_files = [f for f in os.listdir(excel_dir) if file_type in f.lower() and f.endswith('.xlsx')]
+                
+                if excel_files:
+                    excel_file_path = os.path.join(excel_dir, excel_files[0])
+                    # Move the Excel file to the specific directory
+                    os.rename(excel_file_path, os.path.join(specific_excel_dir, excel_files[0]))
+                    
+                    # Run the main code using both PDF and Excel files and get DataFrame
+                    df = run_main_code(pdf_file_path, excel_file_path)
+                    
+                    # Save the DataFrame to the output directory as a CSV file
+                    output_file = os.path.join(specific_output_dir, f"{file_type}_output.csv")
+                    df.to_csv(output_file, index=False)
+                    print(f"DataFrame saved as {output_file}")
+                else:
+                    print(f"No Excel file found for {file_type.upper()}.")
+            else:
+                print(f"No matching condition found in {pdf_file}")
+    else:
+        print("No PDF files found.")
+
+# Placeholder function for extracting text from PDF
+def extract_text_from_pdf(file):
+    # Dummy function. Replace with actual PDF text extraction code.
+    return "Sample text with sbi mutual fund"
+
+# Execute the script
+if __name__ == "__main__":
+    process_files()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
