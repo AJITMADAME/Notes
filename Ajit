@@ -1,3 +1,92 @@
+import os
+import pandas as pd
+from PyPDF2 import PdfReader
+import shutil
+
+# Folder paths for PDF and Excel files
+pdf_folder = 'path_to_pdf_folder'
+excel_folder = 'path_to_excel_folder'
+
+# Destination folders after processing
+processed_pdf_folder = 'path_to_processed_pdf_folder'
+processed_excel_folder = 'path_to_processed_excel_folder'
+
+# Create destination folders if they don't exist
+os.makedirs(processed_pdf_folder, exist_ok=True)
+os.makedirs(processed_excel_folder, exist_ok=True)
+
+# Function to check the type of PDF from the first page text
+def check_pdf_type(pdf_path):
+    reader = PdfReader(pdf_path)
+    first_page = reader.pages[0]
+    text = first_page.extract_text().lower()
+    
+    if 'sbi' in text:
+        return 'SBI'
+    elif 'birla' in text:
+        return 'Birla'
+    elif 'icici' in text:
+        return 'ICICI'
+    else:
+        return 'Unknown'
+
+# Function to open the corresponding Excel file (same name as PDF)
+def open_excel_file(pdf_file):
+    excel_filename = pdf_file.replace('.pdf', '.xlsx')  # Replace .pdf with .xlsx
+    excel_path = os.path.join(excel_folder, excel_filename)
+    
+    if os.path.exists(excel_path):
+        print(f"Opening Excel file: {excel_filename}")
+        df = pd.read_excel(excel_path)
+        return df, excel_path
+    else:
+        print(f"No Excel file found for {pdf_file}")
+        return None, None
+
+# Function to move the PDF and Excel files to processed folders
+def move_files(pdf_file, excel_file, pdf_path, excel_path):
+    # Move PDF
+    new_pdf_path = os.path.join(processed_pdf_folder, pdf_file)
+    shutil.move(pdf_path, new_pdf_path)
+    print(f"Moved PDF to: {new_pdf_path}")
+
+    # Move Excel
+    if excel_path:
+        new_excel_path = os.path.join(processed_excel_folder, excel_file)
+        shutil.move(excel_path, new_excel_path)
+        print(f"Moved Excel to: {new_excel_path}")
+
+# Process PDFs
+for pdf_file in os.listdir(pdf_folder):
+    if pdf_file.endswith('.pdf'):
+        pdf_path = os.path.join(pdf_folder, pdf_file)
+        pdf_type = check_pdf_type(pdf_path)
+        
+        if pdf_type != 'Unknown':
+            print(f"{pdf_file} is of type {pdf_type}")
+            df, excel_path = open_excel_file(pdf_file)
+            if df is not None:
+                # Perform operations with the DataFrame (process the data as needed)
+                print(df.head())
+
+                # Move the PDF and Excel files after processing
+                move_files(pdf_file, pdf_file.replace('.pdf', '.xlsx'), pdf_path, excel_path)
+        else:
+            print(f"{pdf_file} could not be identified as SBI, Birla, or ICICI.")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 import os
 import pandas as pd
