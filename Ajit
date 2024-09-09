@@ -1,3 +1,60 @@
+
+import os
+import pandas as pd
+from PyPDF2 import PdfReader
+
+# Folder paths for PDF and Excel files
+pdf_folder = 'path_to_pdf_folder'
+excel_folder = 'path_to_excel_folder'
+
+# Function to check the type of PDF from the first page text
+def check_pdf_type(pdf_path):
+    reader = PdfReader(pdf_path)
+    first_page = reader.pages[0]
+    text = first_page.extract_text().lower()
+    
+    if 'sbi' in text:
+        return 'SBI'
+    elif 'birla' in text:
+        return 'Birla'
+    elif 'icici' in text:
+        return 'ICICI'
+    else:
+        return 'Unknown'
+
+# Function to open the corresponding Excel file (same name as PDF)
+def open_excel_file(pdf_file):
+    excel_filename = pdf_file.replace('.pdf', '.xlsx')  # Replace .pdf with .xlsx
+    excel_path = os.path.join(excel_folder, excel_filename)
+    
+    if os.path.exists(excel_path):
+        print(f"Opening Excel file: {excel_filename}")
+        df = pd.read_excel(excel_path)
+        return df
+    else:
+        print(f"No Excel file found for {pdf_file}")
+        return None
+
+# Process PDFs
+for pdf_file in os.listdir(pdf_folder):
+    if pdf_file.endswith('.pdf'):
+        pdf_path = os.path.join(pdf_folder, pdf_file)
+        pdf_type = check_pdf_type(pdf_path)
+        
+        if pdf_type != 'Unknown':
+            print(f"{pdf_file} is of type {pdf_type}")
+            df = open_excel_file(pdf_file)
+            if df is not None:
+                # Perform operations with the DataFrame
+                print(df.head())
+        else:
+            print(f"{pdf_file} could not be identified as SBI, Birla, or ICICI.")
+
+
+
+
+
+
 import os
 import re
 import pandas as pd
