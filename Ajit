@@ -1,3 +1,31 @@
+I hope you're doing well.
+
+I wanted to confirm that the demo on PDF text extraction is scheduled for Monday from 3:30 PM to 4:00 PM. During the demo, 
+
+
+
+
+
+I hope you're doing well.
+
+I wanted to confirm that the demo on PDF text extraction is scheduled for Monday from 3:30 PM to 4:00 PM. During the demo, I will walk you through how the code and the entire pipeline work, including the key processes and outputs.
+
+If this time is inconvenient for you, please let me know, and we can reschedule to a more suitable time.
+
+Looking forward to your confirmation.
+
+Best regards,
+Ajit Madame
+RPA Developer - Data Science
+Adani Enterprises Limited
+
+
+
+
+
+
+
+
 import os
 import pandas as pd
 from PyPDF2 import PdfReader
