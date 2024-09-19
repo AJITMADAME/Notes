@@ -1,5 +1,25 @@
 
 import pandas as pd
+
+# Sample DataFrame
+data = {'transaction_type': ['purchase', 'redemption', 'pur1', 'redeem2', 'pu_test']}
+df = pd.DataFrame(data)
+
+# Modify the transaction_type column based on the condition
+df['transaction_type'] = df['transaction_type'].apply(lambda x: 'Purchase' if x.startswith('pu') else 'Redemption')
+
+print(df)
+
+
+
+
+
+
+
+
+
+
+import pandas as pd
 import glob
 
 # Folder containing the CSV files
