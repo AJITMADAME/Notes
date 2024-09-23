@@ -1,4 +1,16 @@
 
+
+import re
+
+text = "Folio No . 4183111 / 42"
+match = re.search(r'Folio\s+No\s*\.\s*(\d+\s*/\s*\d+)', text)
+
+if match:
+    numbers = match.group(1)
+    print(numbers)  # Output: "4183111 / 42"
+
+
+
 Folio\s+No\s*\.\s*\d+\s*/\s*\d+
 
 
