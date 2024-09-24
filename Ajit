@@ -1,3 +1,39 @@
+
+import os
+import pandas as pd
+
+# Define the path to the main folder
+main_folder = "path_to_main_folder"  # Change this to the actual path
+
+# Initialize a list to store the dataframes
+csv_data = []
+
+# Loop through each subfolder (ICICI, SBI, Birla)
+for subfolder in ["ICICI", "SBI", "Birla"]:
+    output_folder = os.path.join(main_folder, subfolder, "Output")
+    
+    # List all CSV files in the Output folder
+    for file in os.listdir(output_folder):
+        if file.endswith(".csv"):
+            csv_file_path = os.path.join(output_folder, file)
+            
+            # Read the CSV file into a pandas dataframe
+            df = pd.read_csv(csv_file_path)
+            csv_data.append(df)
+
+# Optionally, concatenate all CSVs into one dataframe
+all_data = pd.concat(csv_data, ignore_index=True)
+
+# Now, you can process the data as needed
+print(all_data)
+
+
+
+
+
+
+
+
 I believe I am not the right candidate for the position of Fullstack Developer. It seems this email was sent to me by mistake. Kindly share this interview invitation with the correct person, i.e., Shivani.
 
 
