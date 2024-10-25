@@ -1,3 +1,25 @@
+
+def remove_duplicates_in_place(lst):
+    # First, sort the list
+    lst.sort()
+    
+    # Then remove duplicates by comparing adjacent elements
+    i = 1
+    while i < len(lst):
+        if lst[i] == lst[i - 1]:
+            del lst[i]  # Delete duplicate element
+        else:
+            i += 1
+
+# Test
+input_list = [1, 2, 2, 3, 4, 4, 5]
+remove_duplicates_in_place(input_list)
+print(input_list)  # Output: [1, 2, 3, 4, 5]
+
+
+
+
+
 def remove_duplicates_in_place(lst):
     i = 0
     while i < len(lst):
