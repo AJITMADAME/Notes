@@ -1,3 +1,25 @@
+def remove_duplicates_in_place(lst):
+    i = 0
+    while i < len(lst):
+        j = i + 1
+        while j < len(lst):
+            if lst[i] == lst[j]:
+                del lst[j]  # Delete the duplicate element
+            else:
+                j += 1
+        i += 1
+
+# Test
+input_list = [1, 2, 2, 3, 4, 4, 5]
+remove_duplicates_in_place(input_list)
+print(input_list)  # Output: [1, 2, 3, 4, 5]
+
+
+
+
+
+
+
 
 import os
 import pandas as pd
