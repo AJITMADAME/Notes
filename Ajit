@@ -1,4 +1,40 @@
 import re
+
+# Data
+data = [
+    ['Facilities/Instruments', 'Amount (crore)', 'Rating1', 'Rating Action'],
+    ['Long Term / Short Term Bank Facilities', '145.00', 'CARE BBB-; Stable / CARE A3', 'A-; Negative', 'Reaffirmed'],
+    ['Short Term Bank Facilities', '10.00', 'CARE A3', 'Reaffirmed'],
+    ['Other Facilities', '50.00', 'CARE AA+; Stable / CARE A1+', 'Reaffirmed']
+]
+
+# Function to extract ratings
+def extract_ratings(row):
+    # Combine 'Rating1' and 'Rating Action' columns
+    combined = ' '.join(row[2:4])
+    # Regular expression to capture rating patterns
+    ratings = re.findall(r'(BBB-|A-|A3|AA\+|A1\+)', combined)
+    # Join ratings with a slash '/'
+    return '/'.join(ratings)
+
+# Extracted ratings list
+extracted_ratings = [extract_ratings(row) for row in data[1:]]
+
+# Filter out empty results if any
+extracted_ratings = [rating for rating in extracted_ratings if rating]
+
+# Display the extracted ratings
+print("Extracted Ratings:")
+print(extracted_ratings)
+
+
+
+
+
+
+
+
+import re
 import pandas as pd
 
 # Data
