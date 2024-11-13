@@ -1,3 +1,41 @@
+import re
+import pandas as pd
+
+# Data
+data = [
+    ['Facilities/Instruments', 'Amount (crore)', 'Rating1', 'Rating Action'],
+    ['Long Term / Short Term Bank Facilities', '145.00', 'CARE BBB-; Stable / CARE A3', 'A-; Negative', 'Reaffirmed'],
+    ['Short Term Bank Facilities', '10.00', 'CARE A3', 'Reaffirmed'],
+    ['Other Facilities', '50.00', 'CARE AA+; Stable / CARE A1+', 'Reaffirmed']
+]
+
+# Convert to DataFrame
+df = pd.DataFrame(data[1:], columns=data[0])
+
+# Function to extract ratings
+def extract_ratings(rating):
+    # Regular expression to capture rating patterns
+    ratings = re.findall(r'(BBB-|A-|A3|AA\+|A1\+)', rating)
+    return '/'.join(ratings)
+
+# Apply extraction to relevant columns
+df['Extracted Ratings'] = df['Rating1'].apply(extract_ratings) + '/' + df['Rating Action'].apply(extract_ratings)
+
+# Clean the result by removing any trailing slashes
+df['Extracted Ratings'] = df['Extracted Ratings'].str.strip('/')
+
+# Output the result as a list
+extracted_ratings = df['Extracted Ratings'].tolist()
+
+# Display the extracted ratings
+print("Extracted Ratings:")
+print(extracted_ratings)
+
+
+
+
+
+
 
 def remove_duplicates_in_place(lst):
     # First, sort the list
